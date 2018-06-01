@@ -25,13 +25,16 @@ async function kickstart() {
             name: 'mobileHeaderColor',
             message: 'What color would you like the mobile header to be? (https://bit.ly/1LX2mtq)',
             default: '#ff4970'
+        },
+        {
+            type: 'input',
+            name: 'indexHtmlTitle',
+            message: 'What\'s the title of the index.html',
+            default: 'Page title'
         }
     ]);
 
-    const {projectName, projectAuthor, mobileHeaderColor} = questions;
-
-    ui.log.write('Removing /docs directory');
-    rimraf.sync('./docs');
+    const {projectName, projectAuthor, mobileHeaderColor, indexHtmlTitle} = questions;
 
     ui.log.write('Updating package.json name');
     packageJson.name = projectName;
@@ -59,7 +62,7 @@ async function kickstart() {
     delete packageJson.scripts.kickstart;
 
     ui.log.write('Writing new package.json');
-    fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 4));
+    fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
 
     ui.log.write('Removing package-lock.json');
     fs.unlinkSync('./package-lock.json');
@@ -71,20 +74,21 @@ async function kickstart() {
     const webpackProdFile = fs.readFileSync('./webpack.prod.js', 'utf8');
 
     ui.log.write('Setting page title to project name');
-    newIndex = newIndex.replace('{{projectName}}', projectName);
-    const newWebpackProdFile = webpackProdFile.replace('{{projectName}}', projectName);
+    newIndex = newIndex.replace('{{indexHtmlTitle}}', indexHtmlTitle);
+    const newWebpackProdFile = webpackProdFile.replace('{{indexHtmlTitle}}', indexHtmlTitle);
 
     ui.log.write('Writing new index.html');
     fs.writeFileSync('./index.html', newIndex, 'utf8');
     ui.log.write('Writing new webpack.prod.js');
     fs.writeFileSync('./webpack.prod.js', newWebpackProdFile, 'utf8');
-    
+
     ui.log.write('Removing kickstarter script');
     fs.unlinkSync('./kickstarter.js');
 
     ui.log.write('Removing .git directory');
-    rimraf.sync('.git');    
+    rimraf.sync('.git');
 
+    ui.log.write('Please remember to update meta tags in index.html');
     ui.log.write('All done!');
 }
 
