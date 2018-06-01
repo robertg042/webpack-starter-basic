@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/lifenautjoe/webpack-starter-basic#readme",
   "dependencies": {
-    "normalize.css": "^8.0.0"
+    "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^8.1.0",
