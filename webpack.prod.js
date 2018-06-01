@@ -1,18 +1,18 @@
-const path = require('path');
+const path = require("path");
 
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin"); //installed via npm
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const buildPath = path.resolve(__dirname, 'dist');
+const buildPath = path.resolve(__dirname, "dist");
 
 module.exports = {
-  devtool: 'source-map',
-  entry: './src/index.js',
+  devtool: "source-map",
+  entry: "./src/index.js",
   output: {
-    filename: '[name].[hash:20].js',
+    filename: "[name].[hash:20].js",
     path: buildPath
   },
   module: {
@@ -20,10 +20,10 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
 
         options: {
-          presets: ['env', 'stage-0']
+          presets: ["env", "stage-0"]
         }
       },
       {
@@ -32,7 +32,7 @@ module.exports = {
           use: [
             {
               // translates CSS into CommonJS
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 importLoaders: 2,
                 sourceMap: true
@@ -40,35 +40,35 @@ module.exports = {
             },
             {
               // Runs compiled CSS through postcss for vendor prefixing
-              loader: 'postcss-loader',
+              loader: "postcss-loader",
               options: {
                 config: {
-                  path: 'postcss.config.js'
+                  path: "postcss.config.js"
                 },
                 sourceMap: true
               }
             },
             {
               // compiles Sass to CSS
-              loader: 'sass-loader',
+              loader: "sass-loader",
               options: {
-                outputStyle: 'expanded',
+                outputStyle: "expanded",
                 sourceMap: true,
                 sourceMapContents: true
               }
             }
           ],
-          fallback: 'style-loader'
-        }),
+          fallback: "style-loader"
+        })
       },
       {
         // Load all images as base64 encoding if they are smaller than 8192 bytes
         test: /\.(png|jpe?g|gif)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
-              name: '[name].[hash:20].[ext]',
+              name: "[name].[hash:20].[ext]",
               limit: 8192
             }
           }
@@ -78,9 +78,9 @@ module.exports = {
         test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[hash:20].[ext]',
+              name: "[name].[hash:20].[ext]"
             }
           }
         ]
@@ -89,25 +89,25 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: "./index.html",
       // Inject the js bundle at the end of the body of the given template
-      inject: 'body',
+      inject: "body"
     }),
     new CleanWebpackPlugin(buildPath),
     new FaviconsWebpackPlugin({
       // Your source logo
-      logo: './src/assets/icon.jpg',
+      logo: "./src/assets/icon.jpg",
       // The prefix for all image files (might be a folder or a name)
-      prefix: 'icons-[hash]/',
+      prefix: "icons-[hash]/",
       // Generate a cache file with control hashes and
       // don't rebuild the favicons until those hashes change
       persistentCache: true,
       // Inject the html into the html-webpack-plugin
       inject: true,
       // favicon background color (see https://github.com/jantimon/favicons-webpack-plugin#advanced-usage)
-      background: '#fff',
+      background: "#fff",
       // favicon app title (see https://github.com/jantimon/favicons-webpack-plugin#advanced-usage)
-      title: '{{projectName}}',
+      title: "{{projectName}}",
 
       // which icons should be generated (see https://github.com/jantimon/favicons-webpack-plugin#advanced-usage)
       icons: {
@@ -123,14 +123,14 @@ module.exports = {
         windows: false
       }
     }),
-    new ExtractTextPlugin('[md5:contenthash:hex:20].css', {
+    new ExtractTextPlugin("[md5:contenthash:hex:20].css", {
       allChunks: true
     }),
     new OptimizeCssAssetsPlugin({
-      cssProcessor: require('cssnano'),
+      cssProcessor: require("cssnano"),
       cssProcessorOptions: {
         map: {
-          inline: false,
+          inline: false
         },
         discardComments: {
           removeAll: true

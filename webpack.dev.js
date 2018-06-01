@@ -1,14 +1,11 @@
-const path = require('path');
+const path = require("path");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  devtool: 'eval-cheap-module-source-map',
+  devtool: "eval-cheap-module-source-map",
   entry: {
-    app: [
-      'babel-polyfill',
-      './src/app.js',
-    ],
+    app: ["babel-polyfill", "./src/index.js"]
   },
   devServer: {
     port: 8080,
@@ -19,9 +16,9 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
-          presets: ['env', 'stage-0']
+          presets: ["env", "stage-0"]
         }
       },
       {
@@ -45,24 +42,23 @@ module.exports = {
             // compiles Sass to CSS
             loader: "sass-loader",
             options: {
-              outputStyle: 'expanded',
+              outputStyle: "expanded",
               sourceMap: true,
               sourceMapContents: true
             }
           }
           // Please note we are not running postcss here
         ]
-      }
-      ,
+      },
       {
         // Load all images as base64 encoding if they are smaller than 8192 bytes
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               // On development we want to see where the file is coming from, hence we preserve the [path]
-              name: '[path][name].[ext]?hash=[hash:20]',
+              name: "[path][name].[ext]?hash=[hash:20]",
               limit: 8192
             }
           }
@@ -72,18 +68,18 @@ module.exports = {
         test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[path][name].[ext]?hash=[hash:20]',
+              name: "[path][name].[ext]?hash=[hash:20]"
             }
           }
         ]
       }
-    ],
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: "./index.html",
       inject: true
     })
   ]

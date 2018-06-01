@@ -1,6 +1,4 @@
-import 'normalize.css/normalize.css';
-import './styles/index.scss';
+import "normalize.css/normalize.css";
+import "./styles/index.scss";
 
-document.addEventListener("DOMContentLoaded", () => {
-
-});
+document.addEventListener("DOMContentLoaded", () => {});
